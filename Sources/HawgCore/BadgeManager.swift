@@ -24,17 +24,21 @@ public final class BadgeManager {
 
     public init() {}
 
-    public func calculateLayouts(for processes: [ProcessInfo], screenWidth: CGFloat, screenHeight: CGFloat) -> [BadgeLayout] {
+    public func calculateLayouts(
+        for processes: [ProcessInfo],
+        screenWidth: CGFloat,
+        screenHeight: CGFloat
+    ) -> [BadgeLayout] {
         var layouts: [BadgeLayout] = []
         var currentX = screenWidth - rightMargin
-        let y = screenHeight - topMargin - badgeHeight
+        let yPos = screenHeight - topMargin - badgeHeight
 
         for process in processes {
             let text = process.displayText
             let width = estimateTextWidth(text) + horizontalPadding * 2
             let frame = CGRect(
                 x: currentX - width,
-                y: y,
+                y: yPos,
                 width: width,
                 height: badgeHeight
             )

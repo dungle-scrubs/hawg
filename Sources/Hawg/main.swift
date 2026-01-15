@@ -29,7 +29,11 @@ final class HawgApp {
         let screenWidth = screen.frame.width
         let screenHeight = screen.frame.height
 
-        let layouts = badgeManager.calculateLayouts(for: processes, screenWidth: screenWidth, screenHeight: screenHeight)
+        let layouts = badgeManager.calculateLayouts(
+            for: processes,
+            screenWidth: screenWidth,
+            screenHeight: screenHeight
+        )
         let currentPids = Set(processes.map { $0.pid })
         let existingPids = Set(windows.keys)
 
