@@ -40,8 +40,8 @@ struct BadgeManagerTests {
         let layouts = manager.calculateLayouts(for: processes, screenWidth: screenWidth, screenHeight: screenHeight)
 
         #expect(layouts.count == 3)
-        for i in 0..<(layouts.count - 1) {
-            #expect(layouts[i + 1].frame.maxX < layouts[i].frame.minX)
+        for idx in 0..<(layouts.count - 1) {
+            #expect(layouts[idx + 1].frame.maxX < layouts[idx].frame.minX)
         }
     }
 

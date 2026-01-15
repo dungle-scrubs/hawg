@@ -18,20 +18,20 @@ struct ProcessInfoTests {
     }
 
     @Test func equatableWorks() {
-        let a = ProcessInfo(pid: 123, name: "Safari", cpuPercent: 50)
-        let b = ProcessInfo(pid: 123, name: "Safari", cpuPercent: 50)
-        let c = ProcessInfo(pid: 456, name: "Safari", cpuPercent: 50)
+        let first = ProcessInfo(pid: 123, name: "Safari", cpuPercent: 50)
+        let second = ProcessInfo(pid: 123, name: "Safari", cpuPercent: 50)
+        let third = ProcessInfo(pid: 456, name: "Safari", cpuPercent: 50)
 
-        #expect(a == b)
-        #expect(a != c)
+        #expect(first == second)
+        #expect(first != third)
     }
 
     @Test func hashableWorks() {
-        let a = ProcessInfo(pid: 123, name: "Safari", cpuPercent: 50)
-        let b = ProcessInfo(pid: 123, name: "Safari", cpuPercent: 50)
+        let first = ProcessInfo(pid: 123, name: "Safari", cpuPercent: 50)
+        let second = ProcessInfo(pid: 123, name: "Safari", cpuPercent: 50)
 
-        var set: Set<ProcessInfo> = [a]
-        set.insert(b)
+        var set: Set<ProcessInfo> = [first]
+        set.insert(second)
         #expect(set.count == 1)
     }
 }
