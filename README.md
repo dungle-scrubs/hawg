@@ -4,8 +4,6 @@
 
 Persistent menu bar badges showing processes with high CPU usage. Click a badge to open Activity Monitor.
 
-![Hawg badges](https://via.placeholder.com/400x50?text=Safari+142%25+%7C+Xcode+98%25)
-
 ## Features
 
 - Shows all processes above CPU threshold as badges
@@ -13,7 +11,7 @@ Persistent menu bar badges showing processes with high CPU usage. Click a badge 
 - Sorted by CPU usage (highest first)
 - Click badge to open Activity Monitor
 - Configurable threshold via command-line
-- Runs as headless app (no dock icon)
+- Starts automatically at login
 
 ## Requirements
 
@@ -22,66 +20,49 @@ Persistent menu bar badges showing processes with high CPU usage. Click a badge 
 
 ## Installation
 
-### From Source
-
 ```bash
 git clone https://github.com/dungle-scrubs/hawg.git
 cd hawg
-swift build -c release
-cp .build/release/Hawg /usr/local/bin/hawg
+./install.sh
 ```
 
-### LaunchAgent (start at login)
+To uninstall:
 
 ```bash
-cp com.kevin.hawg.plist ~/Library/LaunchAgents/
-launchctl load ~/Library/LaunchAgents/com.kevin.hawg.plist
-```
-
-## Usage
-
-```bash
-# Default: show processes >= 100% CPU
-hawg
-
-# Custom threshold
-hawg --threshold 50
+./uninstall.sh
 ```
 
 ## Configuration
 
-Edit `com.kevin.hawg.plist` to change the default threshold:
+Default threshold is 200% CPU. To change it, edit `~/Library/LaunchAgents/com.hawg.agent.plist`:
 
 ```xml
-<key>ProgramArguments</key>
-<array>
-    <string>/usr/local/bin/hawg</string>
-    <string>--threshold</string>
-    <string>80</string>
-</array>
+<string>--threshold</string>
+<string>80</string>
+```
+
+Then reload:
+
+```bash
+launchctl unload ~/Library/LaunchAgents/com.hawg.agent.plist
+launchctl load ~/Library/LaunchAgents/com.hawg.agent.plist
 ```
 
 ## Known Limitations
 
-- **macOS only** - uses AppKit for window management
-- **Primary monitor only** - badges appear on main screen
-- **Fixed poll interval** - checks every 2 seconds
-- **Hardcoded Activity Monitor path** - assumes standard macOS install
+- macOS only (uses AppKit)
+- Primary monitor only
+- Fixed 2-second poll interval
 
 ## Development
 
 ```bash
-# Run tests
-swift test
+swift test           # Run tests
+swift build          # Build debug
+swiftlint lint       # Lint
 
-# Build debug
-swift build
-
-# Run with low threshold for testing
+# Test with low threshold
 swift run Hawg --threshold 10
-
-# Lint
-swiftlint lint
 ```
 
 ## License
