@@ -1,6 +1,8 @@
 import AppKit
 import HawgCore
 
+let version = "0.1.0"
+
 final class HawgApp {
     private let monitor: CPUMonitor
     private let badgeManager = BadgeManager()
@@ -59,14 +61,48 @@ final class HawgApp {
     }
 }
 
-func parseThreshold() -> Double {
+func printHelp() {
+    print("""
+        hawg - Show badges for high CPU processes
+
+        USAGE:
+            hawg [OPTIONS]
+
+        OPTIONS:
+            --threshold <percent>  CPU threshold to trigger badge (default: 100)
+            --help, -h             Show this help message
+            --version, -v          Show version
+
+        EXAMPLES:
+            hawg                   # Show processes above 100% CPU
+            hawg --threshold 50    # Show processes above 50% CPU
+
+        Badges appear in the top-right corner. Click a badge to open Activity Monitor.
+        """)
+}
+
+func parseArgs() -> Double? {
     let args = CommandLine.arguments
+
+    if args.contains("--help") || args.contains("-h") {
+        printHelp()
+        return nil
+    }
+
+    if args.contains("--version") || args.contains("-v") {
+        print("hawg \(version)")
+        return nil
+    }
+
     if let idx = args.firstIndex(of: "--threshold"), idx + 1 < args.count {
         return Double(args[idx + 1]) ?? 100
     }
     return 100
 }
 
-let threshold = parseThreshold()
+guard let threshold = parseArgs() else {
+    exit(0)
+}
+
 let app = HawgApp(threshold: threshold)
 app.run()
