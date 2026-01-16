@@ -2,7 +2,7 @@ class Hawg < Formula
   desc "Show badges for high CPU processes in macOS menu bar"
   homepage "https://github.com/dungle-scrubs/hawg"
   url "https://github.com/dungle-scrubs/hawg/archive/refs/tags/v0.1.0.tar.gz"
-  sha256 "PLACEHOLDER"
+  sha256 "6427385ce7ad82e9242ff7c07c21237ee73a1680a6b800bac00d2ff1f2465b3e"
   license "MIT"
 
   depends_on :macos
