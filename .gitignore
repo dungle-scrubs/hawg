@@ -43,3 +43,5 @@ logs/
 
 # Claude Code
 .claude/
+CLAUDE.md
+AGENT.md
